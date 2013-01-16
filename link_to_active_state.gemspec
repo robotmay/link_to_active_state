@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = LinkToActiveState::VERSION
   gem.authors       = ["Robert May"]
   gem.email         = ["robert@wearebarenaked.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{A simple gem to implement active states on links using the standard Rails `link_to` helper.}
+  gem.summary       = %q{Active states for links using the Rails link_to helper.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
