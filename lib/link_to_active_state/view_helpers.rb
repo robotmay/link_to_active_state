@@ -1,8 +1,6 @@
 module LinkToActiveState
   module ViewHelpers
-    alias_method :rails_link_to, :link_to
-
-    def link_to(*args, &block)
+    def link_to_with_active_state(*args, &block)
       html_options = if block_given?
         args.second
       else
@@ -15,6 +13,8 @@ module LinkToActiveState
         active = case active_on
         when String
           request.fullpath == active_on
+        when Array
+          active_on.include?(request.fullpath)
         when Regexp
           request.fullpath =~ active_on  
         when Proc
@@ -35,8 +35,10 @@ module LinkToActiveState
         html_options.delete(:active_state)
       end
 
-      rails_link_to(*args, &block)
+      link_to_without_active_state(*args, &block)
     end
+
+    alias_method_chain :link_to, :active_state
 
     private
     def merge_class(original, new)
