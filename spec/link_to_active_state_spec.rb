@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'link_to_active_state/view_helpers/action_view'
+require 'link_to_active_state/view_helpers/url_helper'
 
 module App
   class Helper < ActionView::Base
@@ -43,6 +43,7 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
     end
 
     it "adds an active state when the current request path matches" do
+      request.stub!(:fullpath).and_return("/")
       lt = helper.link_to "Home", "/", active_on: "/"
       lt.should match(/class=\"active\"/i)
     end
