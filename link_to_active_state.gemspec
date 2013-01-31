@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = "link_to_active_state"
   gem.version       = LinkToActiveState::VERSION
   gem.authors       = ["Robert May"]
-  gem.email         = ["robert@wearebarenaked.com"]
+  gem.email         = ["robotmay@gmail.com"]
   gem.description   = %q{A simple gem to implement active states on links using the standard Rails `link_to` helper.}
   gem.summary       = %q{Active states for links using the Rails link_to helper.}
   gem.homepage      = ""
@@ -19,5 +19,4 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "rails", [">= 3.2.11"]
   gem.add_development_dependency "rspec", ["~> 2.12.0"]
-  gem.add_development_dependency "pry"
 end

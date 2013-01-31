@@ -4,6 +4,10 @@ require 'link_to_active_state'
 module LinkToActiveState
   module ViewHelpers
     module UrlHelper
+      def self.included(base)
+        base.send(:alias_method_chain, :link_to, :active_state)
+      end
+
       def link_to_with_active_state(*args, &block)
         html_options = if block_given?
           args.second
@@ -14,18 +18,7 @@ module LinkToActiveState
         if html_options.present? && html_options[:active_on].present?
           active_on = html_options[:active_on]
 
-          active = case active_on
-          when String
-            request.fullpath == active_on
-          when Array
-            active_on.include?(request.fullpath)
-          when Regexp
-            request.fullpath =~ active_on  
-          when Proc
-            active_on.arity == 1 ? active_on.call(request) : active_on.call
-          end
-
-          if active
+          if is_active?(active_on)
             active_state = html_options[:active_state] || "active"
             case active_state
             when Proc
@@ -42,11 +35,20 @@ module LinkToActiveState
         link_to_without_active_state(*args, &block)
       end
 
-      def self.included(base)
-        base.send(:alias_method_chain, :link_to, :active_state)
+      private
+      def is_active?(active_on)
+        case active_on
+        when String
+          request.fullpath == active_on
+        when Array
+          active_on.include?(request.fullpath)
+        when Regexp
+          request.fullpath =~ active_on  
+        when Proc
+          active_on.arity == 1 ? active_on.call(request) : active_on.call
+        end
       end
 
-      private
       def merge_class(original, new)
         original ||= ""
         [original, new].delete_if(&:blank?).join(" ")
