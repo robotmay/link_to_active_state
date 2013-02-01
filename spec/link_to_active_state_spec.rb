@@ -20,9 +20,9 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
     end
 
     it "aliases link_to_with_active_state to link_to" do
-      lt = helper.link_to "Test", "/", active_on: lambda { true }
-      ltwas = helper.link_to_with_active_state "Test", "/", active_on: lambda { true }
-      ltwoas = helper.link_to_without_active_state "Test", "/", active_on: lambda { true }
+      lt = helper.link_to "Test", "/", :active_on => lambda { true }
+      ltwas = helper.link_to_with_active_state "Test", "/", :active_on => lambda { true }
+      ltwoas = helper.link_to_without_active_state "Test", "/", :active_on => lambda { true }
       lt.should eq(ltwas)
       lt.should_not eq(ltwoas)
     end
@@ -44,13 +44,13 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
 
     it "adds an active state when the current request path matches" do
       request.stub!(:fullpath).and_return("/")
-      lt = helper.link_to "Home", "/", active_on: "/"
+      lt = helper.link_to "Home", "/", :active_on => "/"
       lt.should match(/class=\"active\"/i)
     end
 
     it "doesn't add an active state when the current request doesn't match" do
       request.stub!(:fullpath).and_return("/wibble")
-      lt = helper.link_to "Madness", "/wobble", active_on: "/wobble"
+      lt = helper.link_to "Madness", "/wobble", :active_on => "/wobble"
       lt.should_not match(/class=\"active\"/i)
     end
   end
