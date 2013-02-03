@@ -31,6 +31,7 @@ This gem adds a small bit of extra functionality to the default Rails `link_to` 
 Test the path using a string/path helper:
 ```ruby
 link_to "Account", account_path, active_on: account_path
+=> <a href="/account" class="active">Account</a>
 ```
 
 Using a regular expression:
@@ -49,6 +50,7 @@ By default the class "active" will be added to the existing classes of the link.
 
 ```ruby
 link_to "Account", account_path, active_on: /\/account/i, active_state: "highlighted"
+=> <a href="/account" class="highlighted">Account</a>
 ```
 
 You can also customise other options by using a proc:
@@ -56,6 +58,7 @@ You can also customise other options by using a proc:
 link_to "Account", account_path, active_on: /\/account/i, active_state: lambda { |html_options|
   html_options.merge({ "data-active" => "true" })
 }
+=> <a href="/account" data-active="true">Account</a>
 ```
 
 ## Contributing
