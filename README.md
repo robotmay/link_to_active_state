@@ -10,7 +10,7 @@ Add this line to your application's Gemfile:
 
     gem 'link_to_active_state'
 
-*NOTE*: RubyGems.org is currently in read-only mode, so the gem doesn't yet exist there. Install from the git repo instead:
+Or install from the repository:
 
     gem 'link_to_active_state', git: 'git://github.com/robotmay/link_to_active_state.git', tag: 'v0.1.2'
 
