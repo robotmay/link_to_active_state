@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/robotmay/link_to_active_state.png?branch=master)](https://travis-ci.org/robotmay/link_to_active_state) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/robotmay/link_to_active_state) [![Dependency Status](https://gemnasium.com/robotmay/link_to_active_state.png)](https://gemnasium.com/robotmay/link_to_active_state)
 
-A simple gem to implement active states on links using the standard Rails `link_to` helper.
+A simple gem to implement active states on links using the standard Rails `link_to` helper. 
+This can be helpful in navigation lists or buttons to give them a class when the current URL matches a condition on the link helper.
 
 ## Installation
 
@@ -31,7 +32,11 @@ This gem adds a small bit of extra functionality to the default Rails `link_to` 
 Test the path using a string/path helper:
 ```ruby
 link_to "Account", account_path, active_on: account_path
-=> <a href="/account" class="active">Account</a>
+```
+
+Which, if the `request.fullpath` matches `account_path`, will result in:
+```html
+<a href="/account" class="active">Account</a>
 ```
 
 Using a regular expression:
@@ -50,7 +55,10 @@ By default the class "active" will be added to the existing classes of the link.
 
 ```ruby
 link_to "Account", account_path, active_on: /\/account/i, active_state: "highlighted"
-=> <a href="/account" class="highlighted">Account</a>
+```
+
+```html
+<a href="/account" class="highlighted">Account</a>
 ```
 
 You can also customise other options by using a proc:
@@ -58,7 +66,10 @@ You can also customise other options by using a proc:
 link_to "Account", account_path, active_on: /\/account/i, active_state: lambda { |html_options|
   html_options.merge({ "data-active" => "true" })
 }
-=> <a href="/account" data-active="true">Account</a>
+```
+
+```html
+<a href="/account" data-active="true">Account</a>
 ```
 
 ## Contributing
