@@ -14,7 +14,7 @@ module LinkToActiveState
         else
           args[2]
         end
-      
+
         if html_options.present? && html_options[:active_on].present?
           active_on = html_options[:active_on]
 
@@ -32,7 +32,21 @@ module LinkToActiveState
           html_options.delete(:active_state)
         end
 
-        link_to_without_active_state(*args, &block)
+        if html_options.present? && html_options[:with_li]
+          html_options.delete(:with_li)
+
+          if is_active?(active_on)
+            content_tag(:li, :class => html_options[:active_state] || "active") do
+              link_to_without_active_state(*args, &block)
+            end
+          else
+            content_tag(:li) do
+              link_to_without_active_state(*args, &block)
+            end
+          end
+        else
+          link_to_without_active_state(*args, &block)
+        end
       end
 
       private
@@ -43,7 +57,7 @@ module LinkToActiveState
         when Array
           active_on.include?(request.fullpath)
         when Regexp
-          request.fullpath =~ active_on  
+          request.fullpath =~ active_on
         when Proc
           active_on.arity == 1 ? active_on.call(request) : active_on.call
         end
