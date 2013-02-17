@@ -32,17 +32,11 @@ module LinkToActiveState
           html_options.delete(:active_state)
         end
 
-        if html_options.present? && html_options[:with_li]
-          html_options.delete(:with_li)
+        if html_options.present? && html_options[:active_wrapper]
+          element = html_options.delete(:active_wrapper)
 
-          if is_active?(active_on)
-            content_tag(:li, :class => html_options[:active_state] || "active") do
-              link_to_without_active_state(*args, &block)
-            end
-          else
-            content_tag(:li) do
-              link_to_without_active_state(*args, &block)
-            end
+          content_tag(element, html_options) do
+            link_to_without_active_state(*args, &block)
           end
         else
           link_to_without_active_state(*args, &block)

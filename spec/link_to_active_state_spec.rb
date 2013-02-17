@@ -50,13 +50,13 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
         lt.should match(/class=\"active\"/i)
       end
 
-      it "encloses link in an li with active state if with_li is true" do
+      it "encloses link in an element with active state if active_wrapper is true" do
         request.stub!(:fullpath).and_return("/")
-        lt = helper.link_to "Home", "/", :active_on => "/", :with_li => true
+        lt = helper.link_to "Home", "/", :active_on => "/", :active_wrapper => :li
         lt.should match(/li class=\"active\"/i)
       end
 
-      it "doesn't enclose link in an li if with_li is not specified" do
+      it "doesn't enclose link in an element if active_wrapper is not specified" do
         request.stub!(:fullpath).and_return("/")
         lt = helper.link_to "Home", "/", :active_on => "/"
         lt.should_not match(/li class=\"active\"/i)
@@ -70,9 +70,9 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
         lt.should_not match(/class=\"active\"/i)
       end
 
-      it "encloses link in an li if with_li is true" do
+      it "encloses link in an element if active_wrapper is true" do
         request.stub!(:fullpath).and_return("/wibble")
-        lt = helper.link_to "Home", "/", :active_on => "/", :with_li => true
+        lt = helper.link_to "Home", "/", :active_on => "/", :active_wrapper => :li
         lt.should match(/<li>/i)
       end
 

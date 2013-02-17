@@ -72,11 +72,11 @@ link_to "Account", account_path, active_on: /\/account/i, active_state: lambda {
 <a href="/account" data-active="true">Account</a>
 ```
 
-### List item class
+### Wrappers
 
 If you need an active class on an li tag, for use in a Bootstrap nav for example:
 ```ruby
-link_to "Account", account_path, active_on: account_path, with_li: true
+link_to "Account", account_path, active_on: account_path, active_wrapper: :li
 ```
 
 Which will result in:
