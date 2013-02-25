@@ -72,9 +72,7 @@ module LinkToActiveState
         when Proc
           element_or_proc.call(content, wrapper_options)
         when Symbol || String
-          content_tag(element_or_proc, wrapper_options) do
-            content
-          end
+          content_tag(element_or_proc, content, wrapper_options)
         end
       end
     end
