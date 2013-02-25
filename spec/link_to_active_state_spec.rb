@@ -75,8 +75,15 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
         lt = helper.link_to "Home", "/", :active_on => "/", :active_wrapper => :li
         lt.should match(/<li>/i)
       end
-
+      
+      it "supports options for the wrapper element" do
+        request.stub!(:fullpath).and_return("/wibble")
+        li = helper.link_to "Home", "/", 
+          :active_on => "/",
+          :active_wrapper => :li,
+          :active_wrapper_options => { :class => "wobble" }
+        li.should match(/class=\"wobble\"/i)
+      end
     end
-
   end
 end

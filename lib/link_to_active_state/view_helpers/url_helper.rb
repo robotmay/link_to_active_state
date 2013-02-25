@@ -1,5 +1,6 @@
 require 'action_view'
 require 'link_to_active_state'
+require 'pry'
 
 module LinkToActiveState
   module ViewHelpers
@@ -9,6 +10,8 @@ module LinkToActiveState
       end
 
       def link_to_with_active_state(*args, &block)
+        options = {}
+
         html_options = if block_given?
           args.second
         else
@@ -16,29 +19,29 @@ module LinkToActiveState
         end
 
         if html_options.present? && html_options[:active_on].present?
-          active_on = html_options[:active_on]
+          active_on = html_options.delete(:active_on)
+          active_state = html_options.delete(:active_state) || "active"
 
           if is_active?(active_on)
-            active_state = html_options[:active_state] || "active"
             case active_state
             when Proc
-              html_options.merge(active_state.call(html_options))
+              options = options.merge(active_state.call(html_options))
             when String
-              html_options[:class] = merge_class(html_options[:class], active_state)
+              options[:class] = merge_class(html_options[:class], active_state)
             end
           end
-
-          html_options.delete(:active_on)
-          html_options.delete(:active_state)
         end
 
         if html_options.present? && html_options[:active_wrapper]
           element = html_options.delete(:active_wrapper)
+          wrapper_options = html_options.delete(:active_wrapper_options) || {}
+          wrapper_options = wrapper_options.merge(options)
 
-          content_tag(element, html_options) do
+          content_tag(element, wrapper_options) do
             link_to_without_active_state(*args, &block)
           end
         else
+          html_options.merge!(options)
           link_to_without_active_state(*args, &block)
         end
       end
