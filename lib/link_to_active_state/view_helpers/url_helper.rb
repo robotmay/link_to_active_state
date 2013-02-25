@@ -33,11 +33,11 @@ module LinkToActiveState
         end
 
         if html_options.present? && html_options[:active_wrapper]
-          element = html_options.delete(:active_wrapper)
+          element_or_proc = html_options.delete(:active_wrapper)
           wrapper_options = html_options.delete(:active_wrapper_options) || {}
           wrapper_options = wrapper_options.merge(options)
 
-          content_tag(element, wrapper_options) do
+          render_with_wrapper(element_or_proc, wrapper_options) do
             link_to_without_active_state(*args, &block)
           end
         else
@@ -63,6 +63,19 @@ module LinkToActiveState
       def merge_class(original, new)
         original ||= ""
         [original, new].delete_if(&:blank?).join(" ")
+      end
+      
+      def render_with_wrapper(element_or_proc, wrapper_options, &block)
+        content = block.call
+
+        case element_or_proc
+        when Proc
+          element_or_proc.call(content, wrapper_options)
+        when Symbol || String
+          content_tag(element_or_proc, wrapper_options) do
+            content
+          end
+        end
       end
     end
   end
