@@ -12,17 +12,19 @@ module LinkToActiveState
       def link_to_with_active_state(*args, &block)
         options = {}
 
-        html_options = if block_given?
-          args.second
+        link_options, html_options = if block_given?
+          [args.first, args.second]
         else
-          args[2]
+          [args[1], args[2]]
         end
+
+        link_options ||= {}
 
         if html_options.present? && html_options[:active_on].present?
           active_on = html_options.delete(:active_on)
           active_state = html_options.delete(:active_state) || "active"
 
-          if is_active?(active_on)
+          if is_active?(active_on, link_options)
             case active_state
             when Proc
               options = options.merge(active_state.call(html_options))
@@ -47,7 +49,7 @@ module LinkToActiveState
       end
 
       private
-      def is_active?(active_on)
+      def is_active?(active_on, link_options = {})
         case active_on
         when String
           request.fullpath == active_on
@@ -57,6 +59,10 @@ module LinkToActiveState
           request.fullpath =~ active_on
         when Proc
           active_on.arity == 1 ? active_on.call(request) : active_on.call
+        else
+          # Anything else we'll take as a true argument, and match the link's URL
+          url = url_for(link_options)
+          request.fullpath == url
         end
       end
 

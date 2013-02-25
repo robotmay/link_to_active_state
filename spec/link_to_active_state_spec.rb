@@ -43,10 +43,15 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
     end
 
     context "when the current request path matches" do
-
       it "adds an active state" do
         request.stub!(:fullpath).and_return("/")
         lt = helper.link_to "Home", "/", :active_on => "/"
+        lt.should match(/class=\"active\"/i)
+      end
+
+      it "uses the link's URL by default" do
+        request.stub!(:fullpath).and_return("/")
+        lt = helper.link_to "Home", "/", :active_on => true
         lt.should match(/class=\"active\"/i)
       end
 

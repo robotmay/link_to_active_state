@@ -49,6 +49,11 @@ Or a proc:
 link_to "Account", account_path, active_on: lambda { request.fullpath == account_path }
 ```
 
+Any other value will cause it to be matched against the URL supplied to the link_to helper:
+```ruby
+link_to "Account", account_path, active_on: true
+```
+
 ### Custom options
 
 By default the class "active" will be added to the existing classes of the link. However you can specify your own:
