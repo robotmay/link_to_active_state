@@ -17,9 +17,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.cert_chain = [".public_cert.pem"]
-  gem.signing_key = ENV['PRIVATE_KEY']
-
   gem.add_development_dependency "rails", [">= 3.2.11"]
   gem.add_development_dependency "rspec", ["~> 2.13.0"]
 end
