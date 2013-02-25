@@ -101,6 +101,17 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
         li.should match(/<li class=\"active\">/i)
         li.should match(/<a href/i)
       end
+      
+      it "supports options on proc wrapper elements" do
+        request.stub!(:fullpath).and_return("/")
+        li = helper.link_to "Home", "/",
+          :active_on => "/",
+          :active_wrapper_options => { :class => "wibble" },
+          :active_wrapper => proc { |link, wrapper_options|
+            "<li class=\"#{wrapper_options[:class]}\">#{link}</li>"
+          }
+        li.should match(/<li class=\"wibble active\">/i)
+      end
     end
   end
 end

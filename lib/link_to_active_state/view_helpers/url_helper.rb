@@ -20,6 +20,7 @@ module LinkToActiveState
 
         link_options ||= {}
         html_options ||= {}
+        wrapper_options = html_options.delete(:active_wrapper_options) || {}
 
         if html_options.present? && html_options[:active_on].present?
           active_on = html_options.delete(:active_on)
@@ -36,9 +37,12 @@ module LinkToActiveState
         end
 
         if html_options.present? && html_options[:active_wrapper]
+          if wrapper_options[:class].present?
+            options[:class] = merge_class(wrapper_options[:class], options[:class])
+          end
+          
           element_or_proc = html_options.delete(:active_wrapper)
-          wrapper_options = html_options.delete(:active_wrapper_options) || {}
-          wrapper_options = wrapper_options.merge(options)
+          wrapper_options.merge!(options)
 
           render_with_wrapper(element_or_proc, wrapper_options) do
             link_to_without_active_state(*args, &block)
