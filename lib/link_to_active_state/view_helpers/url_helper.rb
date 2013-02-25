@@ -19,6 +19,7 @@ module LinkToActiveState
         end
 
         link_options ||= {}
+        html_options ||= {}
 
         if html_options.present? && html_options[:active_on].present?
           active_on = html_options.delete(:active_on)
