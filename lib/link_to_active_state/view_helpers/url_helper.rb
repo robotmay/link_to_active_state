@@ -1,6 +1,5 @@
 require 'action_view'
 require 'link_to_active_state'
-require 'pry'
 
 module LinkToActiveState
   module ViewHelpers

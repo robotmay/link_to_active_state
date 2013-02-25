@@ -19,5 +19,4 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "rails", [">= 3.2.11"]
   gem.add_development_dependency "rspec", ["~> 2.13.0"]
-  gem.add_development_dependency "pry", [">= 0.9.12"]
 end
