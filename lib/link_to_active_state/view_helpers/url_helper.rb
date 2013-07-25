@@ -25,7 +25,7 @@ module LinkToActiveState
           active_on = html_options.delete(:active_on)
           active_state = html_options.delete(:active_state) || "active"
 
-          if is_active?(active_on, link_options)
+          if is_active?(active_on, link_options, html_options)
             case active_state
             when Proc
               options = options.merge(active_state.call(html_options))
@@ -39,7 +39,7 @@ module LinkToActiveState
           if wrapper_options[:class].present?
             options[:class] = merge_class(wrapper_options[:class], options[:class])
           end
-          
+
           element_or_proc = html_options.delete(:active_wrapper)
           wrapper_options.merge!(options)
 
@@ -53,20 +53,26 @@ module LinkToActiveState
       end
 
       private
-      def is_active?(active_on, link_options = {})
+      def is_active?(active_on, link_options = {}, html_options = {})
+        if html_options.present? && html_options[:ignore_query]
+          path = request.fullpath.gsub( /\?.*/, "" )
+        else
+          path = request.fullpath
+        end
+
         case active_on
         when String
-          request.fullpath == active_on
+          path == active_on
         when Array
-          active_on.include?(request.fullpath)
+          active_on.include?(path)
         when Regexp
-          request.fullpath =~ active_on
+          path =~ active_on
         when Proc
           active_on.arity == 1 ? active_on.call(request) : active_on.call
         else
-          # Anything else we'll take as a true argument, and match the link's URL
+          # Anything else we'll take as a true argument, and match the link's URL (including any query string)
           url = url_for(link_options)
-          request.fullpath == url
+          path == url
         end
       end
 
@@ -74,7 +80,7 @@ module LinkToActiveState
         original ||= ""
         [original, new].delete_if(&:blank?).join(" ")
       end
-      
+
       def render_with_wrapper(element_or_proc, wrapper_options, &block)
         content = block.call
 
