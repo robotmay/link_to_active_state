@@ -10,6 +10,19 @@ end
 describe LinkToActiveState::ViewHelpers::UrlHelper do
   let(:helper) { App::Helper.new }
 
+  let(:request) do
+    class Request
+      def fullpath
+      end
+    end
+
+    Request.new
+  end
+
+  before(:each) do
+    helper.stub!(:request).and_return(request)
+  end
+
   context "integration with ActionView" do
     it "aliases the original link_to helper" do
       helper.should respond_to(:link_to_without_active_state)
@@ -29,19 +42,6 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
   end
 
   context "active states on links" do
-    let(:request) do
-      class Request
-        def fullpath
-        end
-      end
-
-      Request.new
-    end
-
-    before(:each) do
-      helper.stub!(:request).and_return(request)
-    end
-
     context "when the current request path matches" do
       it "adds an active state" do
         request.stub!(:fullpath).and_return("/")
@@ -66,6 +66,18 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
         lt = helper.link_to "Home", "/", :active_on => "/"
         lt.should_not match(/li class=\"active\"/i)
       end
+
+      it "matches in spite of query string if ignore query is true" do
+        request.stub!(:fullpath).and_return("/wobble?test=true")
+        lt = helper.link_to "Madness", "/wobble", :active_on => true, :ignore_query => true
+        lt.should match(/class=\"active\"/i)
+      end
+
+      it "doesn't match in spite of query string if ignore query is not specified" do
+        request.stub!(:fullpath).and_return("/wobble?test=true")
+        lt = helper.link_to "Madness", "/wobble", :active_on => true
+        lt.should_not match(/class=\"active\"/i)
+      end
     end
 
     context "when the current request doesn't match" do
@@ -84,7 +96,7 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
 
     describe "wrapper element support" do
       it "supports options for the wrapper element" do
-        li = helper.link_to "Home", "/", 
+        li = helper.link_to "Home", "/",
           :active_on => "/",
           :active_wrapper => :li,
           :active_wrapper_options => { :class => "wobble" }
@@ -101,7 +113,7 @@ describe LinkToActiveState::ViewHelpers::UrlHelper do
         li.should match(/<li class=\"active\">/i)
         li.should match(/<a href/i)
       end
-      
+
       it "supports options on proc wrapper elements" do
         request.stub!(:fullpath).and_return("/")
         li = helper.link_to "Home", "/",
