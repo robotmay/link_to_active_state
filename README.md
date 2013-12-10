@@ -13,7 +13,7 @@ Add this line to your application's Gemfile:
 
 Or install from the repository:
 
-    gem 'link_to_active_state', git: 'git://github.com/robotmay/link_to_active_state.git', tag: 'v0.1.2'
+    gem 'link_to_active_state', git: 'git://github.com/robotmay/link_to_active_state.git', tag: 'v1.0.5'
 
 And then execute:
 
