@@ -9,14 +9,13 @@ module LinkToActiveState
       end
 
       def link_to_with_active_state(*args, &block)
-        options = {}
-
         link_options, html_options = if block_given?
           [args.first, args.second]
         else
           [args[1], args[2]]
         end
 
+        options = {}
         link_options ||= {}
         html_options ||= {}
         wrapper_options = html_options.delete(:active_wrapper_options) || {}
@@ -29,19 +28,16 @@ module LinkToActiveState
             case active_state
             when Proc
               options = options.merge(active_state.call(html_options))
+              wrapper_options = wrapper_options.merge(active_state.call(html_options))
             when String
               options[:class] = merge_class(html_options[:class], active_state)
+              wrapper_options[:class] = merge_class(wrapper_options[:class], active_state)
             end
           end
         end
 
         if html_options.present? && html_options[:active_wrapper]
-          if wrapper_options[:class].present?
-            options[:class] = merge_class(wrapper_options[:class], options[:class])
-          end
-
           element_or_proc = html_options.delete(:active_wrapper)
-          wrapper_options.merge!(options)
 
           render_with_wrapper(element_or_proc, wrapper_options) do
             link_to_without_active_state(*args, &block)
