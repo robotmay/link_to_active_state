@@ -1,6 +1,7 @@
 # LinkToActiveState
 
-[![Build Status](https://travis-ci.org/robotmay/link_to_active_state.png?branch=master)](https://travis-ci.org/robotmay/link_to_active_state) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/robotmay/link_to_active_state) [![Dependency Status](https://gemnasium.com/robotmay/link_to_active_state.png)](https://gemnasium.com/robotmay/link_to_active_state)
+[![Build Status](https://travis-ci.org/robotmay/link_to_active_state.png?branch=master)](https://travis-ci.org/robotmay/link_to_active_state)
+[![Gem Version](https://badge.fury.io/rb/link_to_active_state.svg)](http://badge.fury.io/rb/link_to_active_state)
 
 A simple gem to implement active states on links using the standard Rails `link_to` helper. 
 This can be helpful in navigation lists or buttons to give them a class when the current URL matches a condition on the link helper.
