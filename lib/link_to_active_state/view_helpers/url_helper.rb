@@ -5,7 +5,8 @@ module LinkToActiveState
   module ViewHelpers
     module UrlHelper
       def self.included(base)
-        base.send(:alias_method_chain, :link_to, :active_state)
+        base.send(:alias_method, :link_to_without_active_state, :link_to)
+        base.send(:alias_method, :link_to, :link_to_with_active_state)
       end
 
       def link_to_with_active_state(*args, &block)
