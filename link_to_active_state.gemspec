@@ -7,10 +7,11 @@ Gem::Specification.new do |gem|
   gem.name          = "link_to_active_state"
   gem.version       = LinkToActiveState::VERSION
   gem.authors       = ["Robert May"]
-  gem.email         = ["robotmay@gmail.com"]
+  gem.email         = ["rob@afternoonrobot.co.uk"]
   gem.description   = %q{A simple gem to implement active states on links using the standard Rails `link_to` helper.}
   gem.summary       = %q{Active states for links using the Rails link_to helper.}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/robotmay/link_to_active_state"
+  gem.licenses      = ["MIT"]
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
