@@ -1,6 +1,5 @@
 # LinkToActiveState
 
-[![Build Status](https://travis-ci.org/robotmay/link_to_active_state.png?branch=master)](https://travis-ci.org/robotmay/link_to_active_state)
 [![Gem Version](https://badge.fury.io/rb/link_to_active_state.svg)](http://badge.fury.io/rb/link_to_active_state)
 
 A simple gem to implement active states on links using the standard Rails `link_to` helper. 
