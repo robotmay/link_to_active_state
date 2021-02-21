@@ -8,7 +8,7 @@ module App
 end
 
 describe LinkToActiveState::ViewHelpers::UrlHelper do
-  let(:helper) { App::Helper.new }
+  let(:helper) { App::Helper.new(ActionView::LookupContext.new([Pathname.new(__dir__).to_s]), {}, nil) }
 
   let(:request) do
     class Request
